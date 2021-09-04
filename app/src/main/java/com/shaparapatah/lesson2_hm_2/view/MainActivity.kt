@@ -1,7 +1,8 @@
-package com.shaparapatah.lesson2_hm_2
+package com.shaparapatah.lesson2_hm_2.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.shaparapatah.lesson2_hm_2.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
