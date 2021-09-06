@@ -9,7 +9,7 @@ import kotlin.random.Random
 
 class MainViewModel(
     private val liveDataToObserver: MutableLiveData<AppState> = MutableLiveData(),
-    val repositoryImpl: RepositoryImpl = RepositoryImpl()
+    private val repositoryImpl: RepositoryImpl = RepositoryImpl()
 ) :
     ViewModel() {
 
@@ -17,15 +17,23 @@ class MainViewModel(
     fun getLiveData() = liveDataToObserver
 
 
-    fun getDataFromRemoteSource() {
+    fun getWeatherFromLocalSourceWorld() {
+        getDataFromLocalSource(false)
+    }
+
+    fun getWeatherFromLocalSourceRussian() {
+        getDataFromLocalSource(true)
+    }
+
+
+    private fun getDataFromLocalSource(isRussian: Boolean) {
         liveDataToObserver.postValue(AppState.Loading)
         Thread {
-            sleep(2000)
-           // val random = Random(15).nextInt()
-            //if (random > 5)
-            liveDataToObserver.postValue(AppState.Success(repositoryImpl.getWeatherFromRemoteSource()))
-           // else
-             //   liveDataToObserver.postValue(AppState.Error(IllegalStateException()))
+            sleep(1000)
+            if (isRussian) {
+                liveDataToObserver.postValue(AppState.Success(repositoryImpl.getWeatherFromLocalStorageRus()))
+            } else
+                liveDataToObserver.postValue(AppState.Success(repositoryImpl.getWeatherFromLocalStorageWorld()))
         }.start()
     }
 }
