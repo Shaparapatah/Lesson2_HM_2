@@ -21,11 +21,11 @@ class MainViewModel(
         liveDataToObserver.postValue(AppState.Loading)
         Thread {
             sleep(2000)
-            val random = Random(15).nextInt()
-            if (random > 5)
+           // val random = Random(15).nextInt()
+            //if (random > 5)
             liveDataToObserver.postValue(AppState.Success(repositoryImpl.getWeatherFromRemoteSource()))
-            else
-                liveDataToObserver.postValue(AppState.Error(IllegalStateException()))
+           // else
+             //   liveDataToObserver.postValue(AppState.Error(IllegalStateException()))
         }.start()
     }
 }
