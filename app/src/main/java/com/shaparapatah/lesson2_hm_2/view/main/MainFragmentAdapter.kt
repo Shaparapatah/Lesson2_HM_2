@@ -14,17 +14,12 @@ class MainFragmentAdapter(private var onItemViewClickListener: OnItemViewClickLi
     RecyclerView.Adapter<MainFragmentAdapter.MainFragmentViewHolder>() {
 
     private var weatherData: List<Weather> = listOf()
-    //private lateinit var listener: OnItemViewClickListener
 
 
     fun setWeather(data: List<Weather>) {
         weatherData = data
         notifyDataSetChanged()
     }
-
-   // fun setOnItemViewClickListener(onItemViewClickListener: OnItemViewClickListener) {
-      //  listener = onItemViewClickListener
-   // }
 
     fun removeListener() {
         onItemViewClickListener = null
