@@ -15,13 +15,9 @@ class MainViewModel(
     fun getLiveData() = liveDataToObserver
 
 
-    fun getWeatherFromLocalSourceWorld() {
-        getDataFromLocalSource(false)
-    }
+    fun getWeatherFromLocalSourceWorld() = getDataFromLocalSource(false)
 
-    fun getWeatherFromLocalSourceRussian() {
-        getDataFromLocalSource(true)
-    }
+    fun getWeatherFromLocalSourceRussian() = getDataFromLocalSource(true)
 
 
     private fun getDataFromLocalSource(isRussian: Boolean) {
