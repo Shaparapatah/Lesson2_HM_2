@@ -14,7 +14,7 @@ class MainFragmentAdapter(private var onItemViewClickListener: OnItemViewClickLi
     RecyclerView.Adapter<MainFragmentAdapter.MainFragmentViewHolder>() {
 
     private var weatherData: List<Weather> = listOf()
-    private lateinit var listener: OnItemViewClickListener
+    //private lateinit var listener: OnItemViewClickListener
 
 
     fun setWeather(data: List<Weather>) {
@@ -22,9 +22,9 @@ class MainFragmentAdapter(private var onItemViewClickListener: OnItemViewClickLi
         notifyDataSetChanged()
     }
 
-    fun setOnItemViewClickListener(onItemViewClickListener: OnItemViewClickListener) {
-        listener = onItemViewClickListener
-    }
+   // fun setOnItemViewClickListener(onItemViewClickListener: OnItemViewClickListener) {
+      //  listener = onItemViewClickListener
+   // }
 
     fun removeListener() {
         onItemViewClickListener = null
@@ -35,7 +35,7 @@ class MainFragmentAdapter(private var onItemViewClickListener: OnItemViewClickLi
         return MainFragmentViewHolder(
             LayoutInflater
                 .from(parent.context)
-                .inflate(R.layout.fragment_main_recycler_item, parent, false)
+                .inflate(R.layout.fragment_main_recycler_item, parent, false) as View
         )
     }
 
@@ -51,12 +51,10 @@ class MainFragmentAdapter(private var onItemViewClickListener: OnItemViewClickLi
         fun render(weather: Weather) {
             itemView.findViewById<TextView>(R.id.mainFragmentRecyclerItemTextView).text =
                 weather.city.name
-            itemView.setOnClickListener(object : View.OnClickListener {
-                override fun onClick(p0: View?) {
-                    Toast.makeText(itemView.context, "РАБОТАЕТ", Toast.LENGTH_SHORT).show()
-                    listener.onItemClick(weather)
-                }
-            })
+            itemView.setOnClickListener {
+                Toast.makeText(itemView.context, "РАБОТАЕТ", Toast.LENGTH_SHORT).show()
+                onItemViewClickListener?.onItemClick(weather)
+            }
         }
     }
 }

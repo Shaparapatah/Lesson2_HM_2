@@ -18,10 +18,8 @@ import com.shaparapatah.lesson2_hm_2.viewModel.MainViewModel
 class MainFragment : Fragment(), OnItemViewClickListener {
 
     private var _binding: FragmentMainBinding? = null
-    private val binding: FragmentMainBinding
-        get() {
-            return _binding!!
-        }
+    private val binding get() = _binding!!
+
     private lateinit var viewModel: MainViewModel
     private var isDataSetRus: Boolean = true
 
@@ -34,10 +32,11 @@ class MainFragment : Fragment(), OnItemViewClickListener {
                 bundle.putParcelable(DetailsFragment.BUNDLE_WEATHER_KAY, weather)
                 manager.beginTransaction()
                     .add(R.id.fragment_container, DetailsFragment.newInstance(bundle))
+                    .addToBackStack("")
+                    .commit()
             }
         }
     })
-
 
     companion object {
         fun newInstance() = MainFragment()
@@ -55,31 +54,28 @@ class MainFragment : Fragment(), OnItemViewClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
         binding.mainFragmentRecyclerView.adapter = adapter
-        adapter.setOnItemViewClickListener(this)
-        binding.mainFragmentFAB.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(p0: View?) {
-                isDataSetRus = !isDataSetRus
-                if (isDataSetRus) {
-                    viewModel.getWeatherFromLocalSourceRussian()
-                    binding.mainFragmentFAB.setImageResource(R.drawable.ic_russia)
-                } else {
-                    viewModel.getWeatherFromLocalSourceWorld()
-                    binding.mainFragmentFAB.setImageResource(R.drawable.ic_earth)
-                }
-            }
-        })
+        binding.mainFragmentFAB.setOnClickListener { changeWeatherDataSet() }
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         viewModel.getLiveData()
-            .observe(viewLifecycleOwner, Observer<AppState> { appState: AppState ->
-                renderData(appState)
+            .observe(viewLifecycleOwner, Observer<AppState> {
+                renderData(it)
             })
         viewModel.getWeatherFromLocalSourceRussian()
     }
 
-    fun renderData(appState: AppState) {
+    private fun changeWeatherDataSet() {
+        isDataSetRus = !isDataSetRus
+        if (isDataSetRus) {
+            viewModel.getWeatherFromLocalSourceRussian()
+            binding.mainFragmentFAB.setImageResource(R.drawable.ic_russia)
+        } else {
+            viewModel.getWeatherFromLocalSourceWorld()
+            binding.mainFragmentFAB.setImageResource(R.drawable.ic_earth)
+        }
+    }
+
+    private fun renderData(appState: AppState) {
         when (appState) {
             is AppState.Error -> {
                 binding.mainFragmentLoadingLayout.visibility = View.GONE
