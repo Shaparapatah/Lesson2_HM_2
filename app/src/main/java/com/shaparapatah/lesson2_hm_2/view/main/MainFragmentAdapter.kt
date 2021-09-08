@@ -10,7 +10,8 @@ import com.shaparapatah.lesson2_hm_2.R
 import com.shaparapatah.lesson2_hm_2.domain.Weather
 import com.shaparapatah.lesson2_hm_2.view.OnItemViewClickListener
 
-class MainFragmentAdapter : RecyclerView.Adapter<MainFragmentAdapter.MainFragmentViewHolder>() {
+class MainFragmentAdapter(private var onItemViewClickListener: OnItemViewClickListener?) :
+    RecyclerView.Adapter<MainFragmentAdapter.MainFragmentViewHolder>() {
 
     private var weatherData: List<Weather> = listOf()
     private lateinit var listener: OnItemViewClickListener
@@ -23,6 +24,10 @@ class MainFragmentAdapter : RecyclerView.Adapter<MainFragmentAdapter.MainFragmen
 
     fun setOnItemViewClickListener(onItemViewClickListener: OnItemViewClickListener) {
         listener = onItemViewClickListener
+    }
+
+    fun removeListener() {
+        onItemViewClickListener = null
     }
 
 
@@ -42,7 +47,7 @@ class MainFragmentAdapter : RecyclerView.Adapter<MainFragmentAdapter.MainFragmen
     override fun getItemCount() = weatherData.size
 
 
-   inner class MainFragmentViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class MainFragmentViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun render(weather: Weather) {
             itemView.findViewById<TextView>(R.id.mainFragmentRecyclerItemTextView).text =
                 weather.city.name

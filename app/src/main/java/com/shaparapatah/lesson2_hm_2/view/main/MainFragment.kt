@@ -24,7 +24,19 @@ class MainFragment : Fragment(), OnItemViewClickListener {
         }
     private lateinit var viewModel: MainViewModel
     private var isDataSetRus: Boolean = true
-    private val adapter = MainFragmentAdapter()
+
+
+    private val adapter = MainFragmentAdapter(object : OnItemViewClickListener {
+        override fun onItemClick(weather: Weather) {
+            val manager = activity?.supportFragmentManager
+            if (manager != null) {
+                val bundle = Bundle()
+                bundle.putParcelable(DetailsFragment.BUNDLE_WEATHER_KAY, weather)
+                manager.beginTransaction()
+                    .add(R.id.fragment_container, DetailsFragment.newInstance(bundle))
+            }
+        }
+    })
 
 
     companion object {
@@ -60,11 +72,10 @@ class MainFragment : Fragment(), OnItemViewClickListener {
             }
         })
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        viewModel.getLiveData().observe(viewLifecycleOwner, Observer<AppState> {
-            //renderData(it)
-                appState: AppState ->
-            renderData(appState) // это взаимозаменяемые строки ? ---- renderData(it)
-        })
+        viewModel.getLiveData()
+            .observe(viewLifecycleOwner, Observer<AppState> { appState: AppState ->
+                renderData(appState)
+            })
         viewModel.getWeatherFromLocalSourceRussian()
     }
 
@@ -91,6 +102,7 @@ class MainFragment : Fragment(), OnItemViewClickListener {
 
 
     override fun onDestroy() {
+        adapter.removeListener()
         super.onDestroy()
         _binding = null
     }

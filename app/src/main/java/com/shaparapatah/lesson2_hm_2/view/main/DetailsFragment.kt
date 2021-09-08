@@ -11,21 +11,18 @@ import com.shaparapatah.lesson2_hm_2.domain.Weather
 class DetailsFragment : Fragment() {
 
     private var _binding: FragmentDetailsBinding? = null
-    private val binding: FragmentDetailsBinding
-        get() {
-            return _binding!!
-        }
+    private val binding get() = _binding!!
 
 
     companion object {
+
+        const val BUNDLE_WEATHER_KAY = "KEY"
+
         fun newInstance(bundle: Bundle): DetailsFragment {
             val fragment = DetailsFragment()
             fragment.arguments = bundle
             return fragment
         }
-
-        const val BUNDLE_WEATHER_KAY = "KEY"
-
     }
 
     override fun onCreateView(
