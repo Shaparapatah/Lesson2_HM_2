@@ -5,20 +5,9 @@ import com.shaparapatah.lesson2_hm_2.domain.getRussianCities
 import com.shaparapatah.lesson2_hm_2.domain.getWorldCities
 
 class RepositoryImpl : Repository {
-    override fun getWeatherFromRemoteSource(): Weather {
-        return Weather()
-    }
-
-    override fun getWeatherFromLocalSource(): Weather {
-        return Weather()
-    }
-
-    override fun getWeatherFromLocalStorageRus(): List<Weather> {
-        return getRussianCities()
-    }
-
-    override fun getWeatherFromLocalStorageWorld(): List<Weather> {
-        return getWorldCities()
-    }
-
+    override fun getWeatherFromRemoteSource() = Weather()
+    override fun getWeatherFromLocalSource() = Weather()
+    override fun getWeatherFromLocalStorageRus() = getRussianCities()
+    override fun getWeatherFromLocalStorageWorld() = getWorldCities()
 }
+

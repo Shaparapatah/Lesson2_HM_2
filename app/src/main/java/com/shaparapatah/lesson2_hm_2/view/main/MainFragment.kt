@@ -15,7 +15,7 @@ import com.shaparapatah.lesson2_hm_2.view.OnItemViewClickListener
 import com.shaparapatah.lesson2_hm_2.viewModel.AppState
 import com.shaparapatah.lesson2_hm_2.viewModel.MainViewModel
 
-class MainFragment : Fragment(), OnItemViewClickListener {
+class MainFragment : Fragment() {
 
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
@@ -102,16 +102,5 @@ class MainFragment : Fragment(), OnItemViewClickListener {
         super.onDestroy()
         _binding = null
     }
-
-    override fun onItemClick(weather: Weather) {
-        val bundle = Bundle()
-        bundle.putParcelable(DetailsFragment.BUNDLE_WEATHER_KAY, weather)
-        requireActivity().supportFragmentManager
-            .beginTransaction()
-            .add(R.id.fragment_container, DetailsFragment.newInstance(bundle))
-            .addToBackStack("")
-            .commit()
-    }
-
 }
 
