@@ -16,12 +16,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/city_name_margin_top"
-            android:textSize="35sp"
+            android:textSize="@dimen/text_size_city_name"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Москва" />
+            tools:text="@string/text_name_moscow" />
 
         <TextView
             android:id="@+id/cityCoordinates"
@@ -31,7 +31,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cityName"
-            tools:text="lt/ln: 55.755826, 37.617299900000035" />
+            tools:text="@string/text_coordinates" />
 
         <TextView
             android:id="@+id/temperatureLabel"
@@ -53,7 +53,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/temperatureLabel"
-            tools:text="+15" />
+            tools:text="@string/text_temperaturevalue" />
 
         <TextView
             android:id="@+id/feelsLikeLabel"
@@ -75,7 +75,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/feelsLikeLabel"
-            tools:text="-23" />
+            tools:text="@string/text_feels_likevalue" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <FrameLayout

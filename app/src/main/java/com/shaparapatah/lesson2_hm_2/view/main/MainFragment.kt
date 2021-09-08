@@ -26,17 +26,21 @@ class MainFragment : Fragment() {
 
     private val adapter = MainFragmentAdapter(object : OnItemViewClickListener {
         override fun onItemClick(weather: Weather) {
-            val manager = activity?.supportFragmentManager
-            if (manager != null) {
-                val bundle = Bundle()
-                bundle.putParcelable(DetailsFragment.BUNDLE_WEATHER_KAY, weather)
-                manager.beginTransaction()
-                    .add(R.id.fragment_container, DetailsFragment.newInstance(bundle))
-                    .addToBackStack("")
-                    .commit()
-            }
+            saveMode(weather)
         }
     })
+
+    private fun saveMode(weather: Weather) {
+        val manager = activity?.supportFragmentManager
+        if (manager != null) {
+            val bundle = Bundle()
+            bundle.putParcelable(DetailsFragment.BUNDLE_WEATHER_KAY, weather)
+            manager.beginTransaction()
+                .add(R.id.fragment_container, DetailsFragment.newInstance(bundle))
+                .addToBackStack("")
+                .commit()
+        }
+    }
 
     companion object {
         fun newInstance() = MainFragment()
