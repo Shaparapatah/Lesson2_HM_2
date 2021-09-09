@@ -21,13 +21,16 @@ class MainViewModel(
 
 
     private fun getDataFromLocalSource(isRussian: Boolean) {
-        liveDataToObserver.postValue(AppState.Loading)
-        Thread {
-            sleep(1000)
-            if (isRussian) {
-                liveDataToObserver.postValue(AppState.Success(repositoryImpl.getWeatherFromLocalStorageRus()))
-            } else
-                liveDataToObserver.postValue(AppState.Success(repositoryImpl.getWeatherFromLocalStorageWorld()))
-        }.start()
+        with(liveDataToObserver) {
+            postValue(AppState.Loading)
+            Thread {
+                sleep(1000)
+                if (isRussian) {
+                    postValue(AppState.Success(repositoryImpl.getWeatherFromLocalStorageRus()))
+                } else
+                    postValue(AppState.Success(repositoryImpl.getWeatherFromLocalStorageWorld()))
+            }.start()
+        }
+
     }
 }

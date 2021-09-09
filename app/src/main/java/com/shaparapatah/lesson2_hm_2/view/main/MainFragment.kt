@@ -34,12 +34,11 @@ class MainFragment : Fragment() {
     })
 
     private fun saveMode(weather: Weather) {
-        val manager = activity?.supportFragmentManager
-        if (manager != null) {
-            val bundle = Bundle()
-            bundle.putParcelable(DetailsFragment.BUNDLE_WEATHER_KAY, weather)
-            manager.beginTransaction()
-                .add(R.id.fragment_container, DetailsFragment.newInstance(bundle))
+        activity?.supportFragmentManager?.apply {
+            beginTransaction()
+                .add(R.id.fragment_container, DetailsFragment.newInstance(Bundle().apply {
+                    putParcelable(DetailsFragment.BUNDLE_WEATHER_KAY, weather)
+                }))
                 .addToBackStack("")
                 .commit()
         }
@@ -54,32 +53,33 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.mainFragmentRecyclerView.adapter = adapter
-        binding.mainFragmentFAB.setOnClickListener { changeWeatherDataSet() }
-       // viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        viewModel.getLiveData()
-            .observe(viewLifecycleOwner, Observer<AppState> {
-                renderData(it)
-            })
-        viewModel.getWeatherFromLocalSourceRussian()
+        with(binding) {
+            mainFragmentRecyclerView.adapter = adapter
+            mainFragmentFAB.setOnClickListener { changeWeatherDataSet() }
+            viewModel.getLiveData()
+                .observe(viewLifecycleOwner, Observer<AppState> {
+                    renderData(it)
+                })
+            viewModel.getWeatherFromLocalSourceRussian()
+        }
+
     }
 
     private fun changeWeatherDataSet() {
-        isDataSetRus = !isDataSetRus
         if (isDataSetRus) {
             viewModel.getWeatherFromLocalSourceRussian()
             binding.mainFragmentFAB.setImageResource(R.drawable.ic_russia)
         } else {
             viewModel.getWeatherFromLocalSourceWorld()
             binding.mainFragmentFAB.setImageResource(R.drawable.ic_earth)
-        }
+        }.also { isDataSetRus = !isDataSetRus }
     }
 
     private fun renderData(appState: AppState) {
@@ -87,7 +87,11 @@ class MainFragment : Fragment() {
             is AppState.Error -> {
                 binding.mainFragmentLoadingLayout.visibility = View.GONE
                 val throwable = appState.error
-                Snackbar.make(binding.root, "ERROR $throwable", Snackbar.LENGTH_LONG).show()
+                binding.root.showSnackbarWithoutAction(
+                    binding.root,
+                    R.string.error,
+                    Snackbar.LENGTH_LONG
+                ).also { "$throwable" } // FIXME Можно ли так записать? Подскажите пожалуйста
             }
             AppState.Loading -> {
                 binding.mainFragmentLoadingLayout.visibility = View.VISIBLE
@@ -96,11 +100,17 @@ class MainFragment : Fragment() {
                 binding.mainFragmentLoadingLayout.visibility = View.GONE
                 val weather = appState.weatherData
                 adapter.setWeather(weather)
-                Snackbar.make(binding.root, "Success", Snackbar.LENGTH_SHORT).show()
-
-
+                binding.root.showSnackbarWithoutAction(
+                    binding.root,
+                    R.string.success,
+                    Snackbar.LENGTH_SHORT
+                )
             }
         }
+    }
+
+    fun View.showSnackbarWithoutAction(view: View, stringId: Int, snackbarLength: Int) {
+        Snackbar.make(view, getString(stringId), snackbarLength).show()
     }
 
 

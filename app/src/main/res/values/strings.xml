@@ -10,4 +10,6 @@
     <string name="text_coordinates">lt/ln: 55.755826, 37.617299900000035</string>
     <string name="text_temperaturevalue">+15</string>
     <string name="text_feels_likevalue">-23</string>
+    <string name="success">Success</string>
+
 </resources>
