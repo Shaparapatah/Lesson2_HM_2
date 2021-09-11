@@ -12,6 +12,7 @@ import com.shaparapatah.lesson2_hm_2.R
 import com.shaparapatah.lesson2_hm_2.databinding.FragmentMainBinding
 import com.shaparapatah.lesson2_hm_2.domain.Weather
 import com.shaparapatah.lesson2_hm_2.view.OnItemViewClickListener
+import com.shaparapatah.lesson2_hm_2.view.details.DetailsFragment
 import com.shaparapatah.lesson2_hm_2.viewModel.AppState
 import com.shaparapatah.lesson2_hm_2.viewModel.MainViewModel
 
