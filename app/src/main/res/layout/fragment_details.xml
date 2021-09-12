@@ -32,7 +32,7 @@
             android:id="@+id/weatherCondition"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="@dimen/margin_15_dp"
             android:textSize="@dimen/feels_like_text_size"
             android:textStyle="bold"
             tools:text="Облачно" />
@@ -42,7 +42,7 @@
             android:id="@+id/cityCoordinates"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="@dimen/margin_15_dp"
             tools:text="@string/text_coordinates" />
 
         <TextView
