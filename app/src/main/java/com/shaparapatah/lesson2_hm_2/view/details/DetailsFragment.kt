@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.shaparapatah.lesson2_hm_2.R
 import com.shaparapatah.lesson2_hm_2.databinding.FragmentDetailsBinding
@@ -76,7 +77,7 @@ class DetailsFragment : Fragment(), WeatherLoaderListener {
     }
 
     override fun onFailed(throwable: Throwable) {
-        TODO("Not yet implemented")
+        Toast.makeText(requireContext(), "Ошибка $throwable", Toast.LENGTH_LONG).show()
     }
 
 }
