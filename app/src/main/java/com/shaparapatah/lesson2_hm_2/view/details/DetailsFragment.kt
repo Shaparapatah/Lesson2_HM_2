@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.shaparapatah.lesson2_hm_2.R
 import com.shaparapatah.lesson2_hm_2.databinding.FragmentDetailsBinding
 import com.shaparapatah.lesson2_hm_2.domain.Weather
 import com.shaparapatah.lesson2_hm_2.repository.WeatherDTO
@@ -53,12 +54,13 @@ class DetailsFragment : Fragment(), WeatherLoaderListener {
     private fun showWeather(weatherDTO: WeatherDTO) {
 
         with(binding) {
+
             cityName.text = localWeather.city.name
             cityCoordinates.text =
                 "lat ${localWeather.city.lat}\n lon ${localWeather.city.lon}"
             temperatureValue.text = weatherDTO.fact.temp.toString()
-            feelsLikeValue.text = "${weatherDTO.fact.feelsLike}"
-            weatherCondition.text = "${weatherDTO.fact.condition}"
+            feelsLikeValue.text = weatherDTO.fact.feelsLike.toString()
+            weatherCondition.text = weatherDTO.fact.condition
 
         }
     }
