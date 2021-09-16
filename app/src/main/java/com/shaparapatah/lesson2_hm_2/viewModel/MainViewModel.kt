@@ -2,7 +2,7 @@ package com.shaparapatah.lesson2_hm_2.viewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import ru.geekbrains.lesson_1423_2_2_main.repository.RepositoryImpl
+import com.shaparapatah.lesson2_hm_2.repository.RepositoryImpl
 import java.lang.Thread.sleep
 
 class MainViewModel(

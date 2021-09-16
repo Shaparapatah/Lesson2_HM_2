@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Lesson2_HM_2</string>
+    <string name="app_name">Weather</string>
 
     <string name="temperature_label">Температура</string>
     <string name="feels_like_label">Ощущается как</string>
