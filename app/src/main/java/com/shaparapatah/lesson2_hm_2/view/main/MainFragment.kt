@@ -92,7 +92,7 @@ class MainFragment : Fragment() {
                     binding.root,
                     R.string.error,
                     Snackbar.LENGTH_LONG
-                ).also { "$throwable" } // FIXME Можно ли так записать? Подскажите пожалуйста
+                )
             }
             AppState.Loading -> {
                 binding.mainFragmentLoadingLayout.visibility = View.VISIBLE

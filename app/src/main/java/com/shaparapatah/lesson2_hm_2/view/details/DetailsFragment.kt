@@ -96,6 +96,7 @@ class DetailsFragment : Fragment(), WeatherLoaderListener {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+        LocalBroadcastManager.getInstance(requireActivity()).unregisterReceiver(receiver)
     }
 
     override fun onLoaded(weatherDTO: WeatherDTO) {

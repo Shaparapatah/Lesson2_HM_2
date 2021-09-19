@@ -36,7 +36,6 @@ class DetailsService(name: String = "details") : IntentService(name) {
     fun loadWeather(lat: Double, lon: Double) {
         try {
             val url = URL("https://api.weather.yandex.ru/v2/informers?lat=${lat}&lon=${lon}")
-            val handler = Handler(Looper.getMainLooper())
             Thread {
                 val urlConnection = url.openConnection() as HttpsURLConnection
                 try {
