@@ -6,7 +6,7 @@ plugins {
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdk 31
+    compileSdk 30
 
 
     buildFeatures {
@@ -16,7 +16,7 @@ android {
     defaultConfig {
         applicationId "com.shaparapatah.lesson2_hm_2"
         minSdk 24
-        targetSdk 31
+        targetSdk 30
         versionCode 1
         versionName "1.0"
 

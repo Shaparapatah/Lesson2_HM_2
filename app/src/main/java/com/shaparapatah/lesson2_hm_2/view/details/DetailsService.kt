@@ -33,7 +33,7 @@ class DetailsService(name: String = "details") : IntentService(name) {
     }
 
 
-    fun loadWeather(lat: Double, lon: Double) {
+    private fun loadWeather(lat: Double, lon: Double) {
         try {
             val url = URL("https://api.weather.yandex.ru/v2/informers?lat=${lat}&lon=${lon}")
             Thread {

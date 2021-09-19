@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -27,12 +28,16 @@ class DetailsFragment : Fragment(), WeatherLoaderListener {
                 if (weatherDTO != null) {
                     showWeather(weatherDTO)
                 } else {
-                    // FIXME для ДЗ
+                    showError()
                 }
             }
 
         }
 
+    }
+
+    fun showError() {
+        Toast.makeText(requireActivity(), "Connection lost", Toast.LENGTH_LONG).show()
     }
 
 
@@ -60,14 +65,16 @@ class DetailsFragment : Fragment(), WeatherLoaderListener {
         return binding.root
     }
 
+
     private val localWeather: Weather by lazy {
         (arguments?.getParcelable(BUNDLE_WEATHER_KAY)) ?: Weather()
+
+
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //  WeatherLoader(this, localWeather.city.lat, localWeather.city.lon).loadWeather()
         val intent = Intent(requireActivity(), DetailsService::class.java)
         intent.putExtra(LATITUDE_EXTRA, localWeather.city.lat)
         intent.putExtra(LONGITUDE_EXTRA, localWeather.city.lon)
