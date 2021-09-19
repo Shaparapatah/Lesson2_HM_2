@@ -2,8 +2,6 @@ package com.shaparapatah.lesson2_hm_2.view.details
 
 import android.app.IntentService
 import android.content.Intent
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.gson.Gson

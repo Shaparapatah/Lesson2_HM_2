@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,11 +11,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import com.shaparapatah.lesson2_hm_2.R
 import com.shaparapatah.lesson2_hm_2.databinding.FragmentDetailsBinding
 import com.shaparapatah.lesson2_hm_2.domain.Weather
 import com.shaparapatah.lesson2_hm_2.repository.WeatherDTO
-import com.shaparapatah.lesson2_hm_2.repository.WeatherLoader
 import com.shaparapatah.lesson2_hm_2.repository.WeatherLoaderListener
 
 class DetailsFragment : Fragment(), WeatherLoaderListener {

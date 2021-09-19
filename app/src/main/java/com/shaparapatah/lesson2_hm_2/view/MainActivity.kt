@@ -26,7 +26,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-
     private var networkChangeReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             val noConnectivity =
