@@ -92,7 +92,32 @@ class DetailsFragment : Fragment(), WeatherLoaderListener {
             temperatureValue.text = weatherDTO.fact.temp.toString()
             feelsLikeValue.text = weatherDTO.fact.feelsLike.toString()
             weatherCondition.text = weatherDTO.fact.condition
-
+            when (weatherDTO.fact.condition) {
+                "clear" -> weatherCondition.text = "Ясно"
+                "partly-cloudy" -> weatherCondition.text = "Малооблачно"
+                "cloudy" -> weatherCondition.text = "Облачно с прояснениями"
+                "overcast" -> weatherCondition.text = "Пасмурно"
+                "drizzle" -> weatherCondition.text = "Морось"
+                "light-rain" -> weatherCondition.text = "Небольшой дождь"
+                "rain" -> weatherCondition.text = "Дождь"
+                "moderate-rain" -> weatherCondition.text = "Умеренно сильный дождь"
+                "heavy-rain" -> weatherCondition.text = "Сильный дождь"
+                "continuous-heavy-rain" -> weatherCondition.text = "Длительный сильный дождь"
+                "showers" -> weatherCondition.text = "Ливень"
+                "wet-snow" -> weatherCondition.text = "Дождь со снегом"
+                "light-snow" -> weatherCondition.text = "Небольшой снег"
+                "snow" -> weatherCondition.text = "Снег"
+                "snow-showers" -> weatherCondition.text = "Снегопад"
+                "hail" -> weatherCondition.text = "Град"
+                "thunderstorm" -> weatherCondition.text = "Гроза"
+                "thunderstorm-with-rain" -> weatherCondition.text = "Дождь с грозой"
+                "thunderstorm-with-hail" -> weatherCondition.text = "Гроза с градом"
+                "night" -> weatherCondition.text = "Ночь"
+                "morning" -> weatherCondition.text = "Утро"
+                "day" -> weatherCondition.text = "День"
+                "evening" -> weatherCondition.text = "вечер"
+                else -> weatherCondition.text = "Ясно"
+            }
         }
     }
 

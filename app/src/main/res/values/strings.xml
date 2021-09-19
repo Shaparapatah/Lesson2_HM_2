@@ -12,4 +12,8 @@
     <string name="text_feels_likevalue">-23</string>
     <string name="success">Success</string>
 
+    <string name="clear">Ясно</string>
+    <string name="partly_cloudy">Малооблачно</string>
+    <string name="cloudy">Облачно с прояснениями</string>
+
 </resources>
