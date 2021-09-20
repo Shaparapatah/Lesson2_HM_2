@@ -90,7 +90,7 @@ class DetailsFragment : Fragment(), WeatherLoaderListener {
             cityCoordinates.text =
                 "lat ${localWeather.city.lat}\n lon ${localWeather.city.lon}"
             temperatureValue.text = weatherDTO.fact.temp.toString()
-            feelsLikeValue.text = weatherDTO.fact.feelsLike.toString()
+            feelsLikeValue.text = weatherDTO.fact.feels_like.toString()
             weatherCondition.text = weatherDTO.fact.condition
             when (weatherDTO.fact.condition) {
                 "clear" -> weatherCondition.text = "Ясно"

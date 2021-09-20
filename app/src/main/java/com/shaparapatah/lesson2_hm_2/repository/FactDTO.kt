@@ -6,7 +6,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class FactDTO(
     val temp: Long,
-    val feelsLike: Long,
+    val feels_like: Long,
     val condition: String,
 ) : Parcelable
 
