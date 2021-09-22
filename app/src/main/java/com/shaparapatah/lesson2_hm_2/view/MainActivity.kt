@@ -46,4 +46,5 @@ class MainActivity : AppCompatActivity() {
     fun onConnectionFound() {
         Toast.makeText(this, "Connection found", Toast.LENGTH_LONG).show()
     }
+
 }
