@@ -1,12 +1,13 @@
-package com.shaparapatah.lesson2_hm_2.view.details
+package com.shaparapatah.lesson2_hm_2.pastLessons
 
 import android.app.IntentService
 import android.content.Intent
 import android.util.Log
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.gson.Gson
-import com.shaparapatah.lesson2_hm_2.*
+import com.shaparapatah.lesson2_hm_2.BuildConfig
 import com.shaparapatah.lesson2_hm_2.repository.WeatherDTO
+import com.shaparapatah.lesson2_hm_2.utils.*
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.MalformedURLException
@@ -21,10 +22,7 @@ class DetailsService(name: String = "details") : IntentService(name) {
             val lon = it.getDoubleExtra(LONGITUDE_EXTRA, -1.0)
             loadWeather(lat, lon)
         }
-
-
     }
-
 
     private fun loadWeather(lat: Double, lon: Double) {
         try {
@@ -44,8 +42,6 @@ class DetailsService(name: String = "details") : IntentService(name) {
                     val mySendIntent = Intent(DETAILS_INTENT_FILTER)
                     mySendIntent.putExtra(DETAILS_LOAD_RESULT_EXTRA, weatherDTO)
                     LocalBroadcastManager.getInstance(this).sendBroadcast(mySendIntent)
-
-
 
                     urlConnection.disconnect()
                 } catch (e: Exception) {

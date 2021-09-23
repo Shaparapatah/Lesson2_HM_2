@@ -1,4 +1,4 @@
-package com.shaparapatah.lesson2_hm_2
+package com.shaparapatah.lesson2_hm_2.utils
 
 const val DETAILS_INTENT_FILTER = "DETAILS INTENT FILTER"
 const val DETAILS_LOAD_RESULT_EXTRA = "LOAD RESULT"
