@@ -9,6 +9,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import com.shaparapatah.lesson2_hm_2.databinding.FragmentDetailsBinding
 import com.shaparapatah.lesson2_hm_2.domain.Weather
+import com.shaparapatah.lesson2_hm_2.utils.YANDEX_API_URL
+import com.shaparapatah.lesson2_hm_2.utils.YANDEX_API_URL_END_POINT
+import com.shaparapatah.lesson2_hm_2.utils.showSnackbar
 import com.shaparapatah.lesson2_hm_2.viewModel.AppState
 import com.shaparapatah.lesson2_hm_2.viewModel.DetailsViewModel
 
@@ -24,7 +27,6 @@ class DetailsFragment : Fragment() {
 
 
     companion object {
-
         const val BUNDLE_WEATHER_KAY = "KEY"
 
         fun newInstance(bundle: Bundle): DetailsFragment {
@@ -56,21 +58,35 @@ class DetailsFragment : Fragment() {
         viewModel.getLiveData().observe(viewLifecycleOwner, {
             renderData(it)
         })
-
+        viewModel.getWeatherFromRemoteSource(
+            YANDEX_API_URL + YANDEX_API_URL_END_POINT +
+                    "?lat=${localWeather.city.lat}&lon=${localWeather.city.lon}"
+        )
     }
 
 
     private fun renderData(appState: AppState) {
         when (appState) {
-            is AppState.Error -> { //FIXME
+            is AppState.Error -> {
+                binding.loadingLayout.visibility = View.INVISIBLE
+                binding.mainView.visibility = View.VISIBLE
 
                 val throwable = appState.error
-                Snackbar.make(binding.root, "ERROR $throwable", Snackbar.LENGTH_SHORT).show()
+                binding.root.showSnackbar("ERROR $throwable", "RELOAD") {
+                    viewModel.getWeatherFromRemoteSource(
+                        YANDEX_API_URL + YANDEX_API_URL_END_POINT +
+                                "?lat=${localWeather.city.lat}&lon=${localWeather.city.lon}"
+                    )
+                }
             }
             AppState.Loading -> {
+                binding.loadingLayout.visibility = View.VISIBLE
+                binding.mainView.visibility = View.INVISIBLE
 
             }
             is AppState.Success -> {
+                binding.loadingLayout.visibility = View.INVISIBLE
+                binding.mainView.visibility = View.VISIBLE
                 val weather = appState.weatherData
                 showWeather(weather[0])
                 Snackbar.make(binding.root, "Success", Snackbar.LENGTH_SHORT).show()
@@ -80,9 +96,7 @@ class DetailsFragment : Fragment() {
 
 
     private fun showWeather(weather: Weather) {
-
         with(binding) {
-
             cityName.text = localWeather.city.name
             cityCoordinates.text =
                 "lat ${localWeather.city.lat}\n lon ${localWeather.city.lon}"
@@ -117,7 +131,6 @@ class DetailsFragment : Fragment() {
             }
         }
     }
-
 
     override fun onDestroy() {
         super.onDestroy()
