@@ -2,16 +2,11 @@ package com.shaparapatah.lesson2_hm_2.viewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.gson.Gson
 import com.shaparapatah.lesson2_hm_2.repository.DetailsRepositoryImpl
 import com.shaparapatah.lesson2_hm_2.repository.RemoteDataSource
 import com.shaparapatah.lesson2_hm_2.repository.WeatherDTO
 import com.shaparapatah.lesson2_hm_2.utils.REQUEST_ERROR
 import com.shaparapatah.lesson2_hm_2.utils.convertDtoToModel
-import okhttp3.Call
-import okhttp3.Callback
-import okhttp3.Response
-import java.io.IOException
 
 class DetailsViewModel(
     private val detailsLiveDataToObserver: MutableLiveData<AppState> = MutableLiveData(),
@@ -24,22 +19,32 @@ class DetailsViewModel(
 
     fun getLiveData() = detailsLiveDataToObserver
 
-    fun getWeatherFromRemoteSource(requestLink: String) {
+    fun getWeatherFromRemoteSource(lat: Double, lon: Double) {
         detailsLiveDataToObserver.value = AppState.Loading
-        detailsRepositoryImpl.getWeatherDetailsFromServer(requestLink, callback)
+        detailsRepositoryImpl.getWeatherDetailsFromServer(lat, lon, callback)
     }
 
-
-    private val callback = object : Callback {
-        override fun onFailure(call: Call, e: IOException) {
+    private val callback = object : retrofit2.Callback<WeatherDTO> {
+        override fun onFailure(call: retrofit2.Call<WeatherDTO>, t: Throwable) {
             detailsLiveDataToObserver.postValue(AppState.Error(Throwable(REQUEST_ERROR)))
         }
 
-        override fun onResponse(call: Call, response: Response) {
-            val serverResponse: String? = response.body()?.string()
-            if (response.isSuccessful && serverResponse != null) {
-                val weatherDTO = Gson().fromJson(serverResponse, WeatherDTO::class.java)
-                detailsLiveDataToObserver.postValue(AppState.Success(convertDtoToModel(weatherDTO)))
+        override fun onResponse(
+            call: retrofit2.Call<WeatherDTO>,
+            response: retrofit2.Response<WeatherDTO>
+        ) {
+
+            if (response.isSuccessful && response.body() != null) {
+                val weatherDTO = response.body()
+                weatherDTO?.let {
+                    detailsLiveDataToObserver.postValue(
+                        AppState.Success(
+                            convertDtoToModel(
+                                weatherDTO
+                            )
+                        )
+                    )
+                }
             } else AppState.Error(Throwable(REQUEST_ERROR))
         }
     }

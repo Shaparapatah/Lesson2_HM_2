@@ -9,8 +9,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import com.shaparapatah.lesson2_hm_2.databinding.FragmentDetailsBinding
 import com.shaparapatah.lesson2_hm_2.domain.Weather
-import com.shaparapatah.lesson2_hm_2.utils.YANDEX_API_URL
-import com.shaparapatah.lesson2_hm_2.utils.YANDEX_API_URL_END_POINT
 import com.shaparapatah.lesson2_hm_2.utils.showSnackbar
 import com.shaparapatah.lesson2_hm_2.viewModel.AppState
 import com.shaparapatah.lesson2_hm_2.viewModel.DetailsViewModel
@@ -58,10 +56,7 @@ class DetailsFragment : Fragment() {
         viewModel.getLiveData().observe(viewLifecycleOwner, {
             renderData(it)
         })
-        viewModel.getWeatherFromRemoteSource(
-            YANDEX_API_URL + YANDEX_API_URL_END_POINT +
-                    "?lat=${localWeather.city.lat}&lon=${localWeather.city.lon}"
-        )
+        getWeatherFromRemote()
     }
 
 
@@ -73,10 +68,7 @@ class DetailsFragment : Fragment() {
 
                 val throwable = appState.error
                 binding.root.showSnackbar("ERROR $throwable", "RELOAD") {
-                    viewModel.getWeatherFromRemoteSource(
-                        YANDEX_API_URL + YANDEX_API_URL_END_POINT +
-                                "?lat=${localWeather.city.lat}&lon=${localWeather.city.lon}"
-                    )
+                    getWeatherFromRemote()
                 }
             }
             AppState.Loading -> {
@@ -135,6 +127,10 @@ class DetailsFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    private fun getWeatherFromRemote() {
+        viewModel.getWeatherFromRemoteSource(localWeather.city.lat, localWeather.city.lon)
     }
 
 }
