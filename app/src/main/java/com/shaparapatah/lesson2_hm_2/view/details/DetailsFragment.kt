@@ -12,6 +12,7 @@ import com.shaparapatah.lesson2_hm_2.domain.Weather
 import com.shaparapatah.lesson2_hm_2.utils.showSnackbar
 import com.shaparapatah.lesson2_hm_2.viewModel.AppState
 import com.shaparapatah.lesson2_hm_2.viewModel.DetailsViewModel
+import com.squareup.picasso.Picasso
 
 class DetailsFragment : Fragment() {
 
@@ -121,6 +122,13 @@ class DetailsFragment : Fragment() {
                 "evening" -> weatherCondition.text = "вечер"
                 else -> weatherCondition.text = "Ясно"
             }
+
+            imageView
+            Picasso
+                .get()
+                //  .load("https://yastatic.net/weather/i/icons/blueye/color/svg/${weather.icon}.svg")
+                .load("https://freepngimg.com/thumb/city/36275-3-city-hd.png")
+                .into(imageViewHeader)
         }
     }
 

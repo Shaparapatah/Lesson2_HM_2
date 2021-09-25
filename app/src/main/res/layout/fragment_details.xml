@@ -4,22 +4,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     android:clickable="true"
-    android:focusable="true"
-    android:background="#FFFFFF">
+    android:focusable="true">
 
     <LinearLayout
         android:id="@+id/mainView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/weather"
         android:gravity="center"
         android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imageViewHeader"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:scaleType="fitXY" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:scaleType="fitXY" />
 
         <TextView
             android:id="@+id/cityName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/city_name_margin_top"
+            android:textColor="#F8F8F8"
             android:textSize="@dimen/text_size_city_name"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -32,17 +45,17 @@
             android:id="@+id/weatherCondition"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_15_dp"
+            android:textColor="#FFFCFC"
             android:textSize="@dimen/feels_like_text_size"
             android:textStyle="bold"
             tools:text="Облачно" />
-
 
         <TextView
             android:id="@+id/cityCoordinates"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_15_dp"
+            android:textColor="#C8C5C5"
             tools:text="@string/text_coordinates" />
 
         <TextView
@@ -50,13 +63,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_15_dp"
-            android:text="@string/temperature_label"/>
+            android:text="@string/temperature_label"
+            android:textColor="#FFFFFF" />
 
         <TextView
             android:id="@+id/temperatureValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_15_dp"
+            android:textColor="#FFFFFF"
             android:textSize="@dimen/temperature_value_text_size"
             android:textStyle="bold"
             tools:text="@string/text_temperaturevalue" />
@@ -66,13 +81,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_15_dp"
-            android:text="@string/feels_like_label" />
+            android:text="@string/feels_like_label"
+            android:textColor="#FFFFFF" />
 
         <TextView
             android:id="@+id/feelsLikeValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_15_dp"
+            android:textColor="#FFFFFF"
             android:textSize="@dimen/feels_like_text_size"
             android:textStyle="bold"
             tools:text="@string/text_feels_likevalue" />

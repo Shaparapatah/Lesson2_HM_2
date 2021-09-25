@@ -8,6 +8,7 @@ data class FactDTO(
     val temp: Long,
     val feels_like: Long,
     val condition: String,
+    val icon : String
 ) : Parcelable
 
 
