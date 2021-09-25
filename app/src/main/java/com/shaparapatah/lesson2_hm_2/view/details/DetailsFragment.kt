@@ -7,15 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import coil.load
-import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.shaparapatah.lesson2_hm_2.databinding.FragmentDetailsBinding
 import com.shaparapatah.lesson2_hm_2.domain.Weather
-import com.shaparapatah.lesson2_hm_2.repository.WeatherDTO
 import com.shaparapatah.lesson2_hm_2.utils.showSnackbar
 import com.shaparapatah.lesson2_hm_2.viewModel.AppState
 import com.shaparapatah.lesson2_hm_2.viewModel.DetailsViewModel
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_details.*
 
 class DetailsFragment : Fragment() {
@@ -128,7 +125,7 @@ class DetailsFragment : Fragment() {
         viewModel.getWeatherFromRemoteSource(localWeather.city.lat, localWeather.city.lon)
     }
 
-    fun conditionStatus(weather: Weather) {
+    private fun conditionStatus(weather: Weather) {
         when (weather.condition) {
             "clear" -> weatherCondition.text = "Ясно"
             "partly-cloudy" -> weatherCondition.text = "Малооблачно"
