@@ -4,9 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import coil.ImageLoader
+import coil.decode.SvgDecoder
 import coil.load
+import coil.request.ImageRequest
 import com.google.android.material.snackbar.Snackbar
 import com.shaparapatah.lesson2_hm_2.databinding.FragmentDetailsBinding
 import com.shaparapatah.lesson2_hm_2.domain.Weather
@@ -113,6 +117,7 @@ class DetailsFragment : Fragment() {
              */
 
             imageViewHeader.load("https://freepngimg.com/thumb/city/36275-3-city-hd.png")
+            imageView.loadUrl(("https://yastatic.net/weather/i/icons/blueye/color/svg/${weather.icon}.svg"))
         }
     }
 
@@ -152,6 +157,19 @@ class DetailsFragment : Fragment() {
             "evening" -> weatherCondition.text = "вечер"
             else -> weatherCondition.text = "Ясно"
         }
+    }
+
+    private fun ImageView.loadUrl(url: String) {
+        val imageLoader = ImageLoader.Builder(this.context)
+            .componentRegistry { add(SvgDecoder(this@loadUrl.context)) }
+            .build()
+        val request = ImageRequest.Builder(this.context)
+            .crossfade(true)
+            .crossfade(500)
+            .data(url)
+            .target(this)
+            .build()
+        imageLoader.enqueue(request)
     }
 }
 
