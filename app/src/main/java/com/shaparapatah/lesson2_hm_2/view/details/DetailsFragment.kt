@@ -6,13 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import coil.load
+import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.shaparapatah.lesson2_hm_2.databinding.FragmentDetailsBinding
 import com.shaparapatah.lesson2_hm_2.domain.Weather
+import com.shaparapatah.lesson2_hm_2.repository.WeatherDTO
 import com.shaparapatah.lesson2_hm_2.utils.showSnackbar
 import com.shaparapatah.lesson2_hm_2.viewModel.AppState
 import com.shaparapatah.lesson2_hm_2.viewModel.DetailsViewModel
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.fragment_details.*
 
 class DetailsFragment : Fragment() {
 
@@ -95,40 +99,23 @@ class DetailsFragment : Fragment() {
                 "lat ${localWeather.city.lat}\n lon ${localWeather.city.lon}"
             temperatureValue.text = weather.temp.toString()
             feelsLikeValue.text = weather.feelsLike.toString()
-            weatherCondition.text = weather.condition
-            when (weather.condition) {
-                "clear" -> weatherCondition.text = "Ясно"
-                "partly-cloudy" -> weatherCondition.text = "Малооблачно"
-                "cloudy" -> weatherCondition.text = "Облачно с прояснениями"
-                "overcast" -> weatherCondition.text = "Пасмурно"
-                "drizzle" -> weatherCondition.text = "Морось"
-                "light-rain" -> weatherCondition.text = "Небольшой дождь"
-                "rain" -> weatherCondition.text = "Дождь"
-                "moderate-rain" -> weatherCondition.text = "Умеренно сильный дождь"
-                "heavy-rain" -> weatherCondition.text = "Сильный дождь"
-                "continuous-heavy-rain" -> weatherCondition.text = "Длительный сильный дождь"
-                "showers" -> weatherCondition.text = "Ливень"
-                "wet-snow" -> weatherCondition.text = "Дождь со снегом"
-                "light-snow" -> weatherCondition.text = "Небольшой снег"
-                "snow" -> weatherCondition.text = "Снег"
-                "snow-showers" -> weatherCondition.text = "Снегопад"
-                "hail" -> weatherCondition.text = "Град"
-                "thunderstorm" -> weatherCondition.text = "Гроза"
-                "thunderstorm-with-rain" -> weatherCondition.text = "Дождь с грозой"
-                "thunderstorm-with-hail" -> weatherCondition.text = "Гроза с градом"
-                "night" -> weatherCondition.text = "Ночь"
-                "morning" -> weatherCondition.text = "Утро"
-                "day" -> weatherCondition.text = "День"
-                "evening" -> weatherCondition.text = "вечер"
-                else -> weatherCondition.text = "Ясно"
-            }
+            conditionStatus(weather)
 
-            imageView
-            Picasso
-                .get()
-                //  .load("https://yastatic.net/weather/i/icons/blueye/color/svg/${weather.icon}.svg")
-                .load("https://freepngimg.com/thumb/city/36275-3-city-hd.png")
-                .into(imageViewHeader)
+            /*   imageView
+               Picasso
+                   .get()
+                   //  .load("https://yastatic.net/weather/i/icons/blueye/color/svg/${weather.icon}.svg")
+                   .load("https://freepngimg.com/thumb/city/36275-3-city-hd.png")
+                   .into(imageViewHeader)
+
+             */
+
+            /*   Glide.with(imageViewHeader)
+                   .load("https://freepngimg.com/thumb/city/36275-3-city-hd.png")
+                   .into(imageViewHeader)
+             */
+
+            imageViewHeader.load("https://freepngimg.com/thumb/city/36275-3-city-hd.png")
         }
     }
 
@@ -141,5 +128,33 @@ class DetailsFragment : Fragment() {
         viewModel.getWeatherFromRemoteSource(localWeather.city.lat, localWeather.city.lon)
     }
 
+    fun conditionStatus(weather: Weather) {
+        when (weather.condition) {
+            "clear" -> weatherCondition.text = "Ясно"
+            "partly-cloudy" -> weatherCondition.text = "Малооблачно"
+            "cloudy" -> weatherCondition.text = "Облачно с прояснениями"
+            "overcast" -> weatherCondition.text = "Пасмурно"
+            "drizzle" -> weatherCondition.text = "Морось"
+            "light-rain" -> weatherCondition.text = "Небольшой дождь"
+            "rain" -> weatherCondition.text = "Дождь"
+            "moderate-rain" -> weatherCondition.text = "Умеренно сильный дождь"
+            "heavy-rain" -> weatherCondition.text = "Сильный дождь"
+            "continuous-heavy-rain" -> weatherCondition.text = "Длительный сильный дождь"
+            "showers" -> weatherCondition.text = "Ливень"
+            "wet-snow" -> weatherCondition.text = "Дождь со снегом"
+            "light-snow" -> weatherCondition.text = "Небольшой снег"
+            "snow" -> weatherCondition.text = "Снег"
+            "snow-showers" -> weatherCondition.text = "Снегопад"
+            "hail" -> weatherCondition.text = "Град"
+            "thunderstorm" -> weatherCondition.text = "Гроза"
+            "thunderstorm-with-rain" -> weatherCondition.text = "Дождь с грозой"
+            "thunderstorm-with-hail" -> weatherCondition.text = "Гроза с градом"
+            "night" -> weatherCondition.text = "Ночь"
+            "morning" -> weatherCondition.text = "Утро"
+            "day" -> weatherCondition.text = "День"
+            "evening" -> weatherCondition.text = "вечер"
+            else -> weatherCondition.text = "Ясно"
+        }
+    }
 }
 
