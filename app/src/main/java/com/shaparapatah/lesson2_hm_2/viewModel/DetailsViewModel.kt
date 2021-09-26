@@ -2,7 +2,10 @@ package com.shaparapatah.lesson2_hm_2.viewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.shaparapatah.lesson2_hm_2.MyApp.Companion.getHistoryDAO
+import com.shaparapatah.lesson2_hm_2.domain.Weather
 import com.shaparapatah.lesson2_hm_2.repository.DetailsRepositoryImpl
+import com.shaparapatah.lesson2_hm_2.repository.LocalRepositoryImp
 import com.shaparapatah.lesson2_hm_2.repository.RemoteDataSource
 import com.shaparapatah.lesson2_hm_2.repository.WeatherDTO
 import com.shaparapatah.lesson2_hm_2.utils.REQUEST_ERROR
@@ -12,9 +15,14 @@ class DetailsViewModel(
     private val detailsLiveDataToObserver: MutableLiveData<AppState> = MutableLiveData(),
     private val detailsRepositoryImpl: DetailsRepositoryImpl = DetailsRepositoryImpl(
         RemoteDataSource()
-    )
+    ),
+    private val historyRepositoryImpl: LocalRepositoryImp = LocalRepositoryImp(getHistoryDAO())
 ) :
     ViewModel() {
+
+    fun saveWeather(weather: Weather) {
+        historyRepositoryImpl.saveEntity(weather)
+    }
 
 
     fun getLiveData() = detailsLiveDataToObserver
@@ -37,13 +45,7 @@ class DetailsViewModel(
             if (response.isSuccessful && response.body() != null) {
                 val weatherDTO = response.body()
                 weatherDTO?.let {
-                    detailsLiveDataToObserver.postValue(
-                        AppState.Success(
-                            convertDtoToModel(
-                                weatherDTO
-                            )
-                        )
-                    )
+                    detailsLiveDataToObserver.postValue( AppState.SuccessDetails(convertDtoToModel(weatherDTO)))
                 }
             } else AppState.Error(Throwable(REQUEST_ERROR))
         }

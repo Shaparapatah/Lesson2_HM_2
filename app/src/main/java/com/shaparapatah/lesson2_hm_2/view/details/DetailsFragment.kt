@@ -82,11 +82,19 @@ class DetailsFragment : Fragment() {
                 binding.mainView.visibility = View.INVISIBLE
 
             }
-            is AppState.Success -> {
+            is AppState.SuccessDetails -> {
                 binding.loadingLayout.visibility = View.INVISIBLE
                 binding.mainView.visibility = View.VISIBLE
                 val weather = appState.weatherData
-                showWeather(weather[0])
+                viewModel.saveWeather(
+                    Weather(
+                        localWeather.city,
+                        weather.temperature,
+                        weather.feelsLike,
+                        weather.condition
+                    )
+                )
+                showWeather(weather)
                 Snackbar.make(binding.root, "Success", Snackbar.LENGTH_SHORT).show()
             }
         }
@@ -98,7 +106,7 @@ class DetailsFragment : Fragment() {
             cityName.text = localWeather.city.name
             cityCoordinates.text =
                 "lat ${localWeather.city.lat}\n lon ${localWeather.city.lon}"
-            temperatureValue.text = weather.temp.toString()
+            temperatureValue.text = weather.temperature.toString()
             feelsLikeValue.text = weather.feelsLike.toString()
             conditionStatus(weather)
 

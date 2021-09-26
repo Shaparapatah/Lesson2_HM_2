@@ -97,7 +97,7 @@ class MainFragment : Fragment() {
             AppState.Loading -> {
                 binding.mainFragmentLoadingLayout.visibility = View.VISIBLE
             }
-            is AppState.Success -> {
+            is AppState.SuccessMain -> {
                 binding.mainFragmentLoadingLayout.visibility = View.GONE
                 val weather = appState.weatherData
                 adapter.setWeather(weather)
@@ -110,7 +110,7 @@ class MainFragment : Fragment() {
         }
     }
 
-    fun View.showSnackbarWithoutAction(view: View, stringId: Int, snackbarLength: Int) {
+    private fun View.showSnackbarWithoutAction(view: View, stringId: Int, snackbarLength: Int) {
         Snackbar.make(view, getString(stringId), snackbarLength).show()
     }
 

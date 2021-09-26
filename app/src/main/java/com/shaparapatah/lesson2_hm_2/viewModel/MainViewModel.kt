@@ -26,9 +26,9 @@ class MainViewModel(
             Thread {
                 sleep(1000)
                 if (isRussian) {
-                    postValue(AppState.Success(repositoryImpl.getWeatherFromLocalStorageRus()))
+                    postValue(AppState.SuccessMain(repositoryImpl.getWeatherFromLocalStorageRus()))
                 } else
-                    postValue(AppState.Success(repositoryImpl.getWeatherFromLocalStorageWorld()))
+                    postValue(AppState.SuccessMain(repositoryImpl.getWeatherFromLocalStorageWorld()))
             }.start()
         }
 

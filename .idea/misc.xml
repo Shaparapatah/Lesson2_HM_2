@@ -7,8 +7,11 @@
         <entry key="..\:/Users/Shaparapatah/AndroidStudioProjects/Lesson2_HM_2/app/src/main/res/drawable-v24/ic_russia.xml" value="0.1648148148148148" />
         <entry key="..\:/Users/Shaparapatah/AndroidStudioProjects/Lesson2_HM_2/app/src/main/res/layout/activity_main.xml" value="0.17" />
         <entry key="..\:/Users/Shaparapatah/AndroidStudioProjects/Lesson2_HM_2/app/src/main/res/layout/fragment_details.xml" value="0.2" />
+        <entry key="..\:/Users/Shaparapatah/AndroidStudioProjects/Lesson2_HM_2/app/src/main/res/layout/fragment_history.xml" value="0.15555555555555556" />
+        <entry key="..\:/Users/Shaparapatah/AndroidStudioProjects/Lesson2_HM_2/app/src/main/res/layout/fragment_history_recyclerview_item.xml" value="0.15555555555555556" />
         <entry key="..\:/Users/Shaparapatah/AndroidStudioProjects/Lesson2_HM_2/app/src/main/res/layout/fragment_main.xml" value="0.16" />
         <entry key="..\:/Users/Shaparapatah/AndroidStudioProjects/Lesson2_HM_2/app/src/main/res/layout/fragment_main_recycler_item.xml" value="0.18" />
+        <entry key="..\:/Users/Shaparapatah/AndroidStudioProjects/Lesson2_HM_2/app/src/main/res/menu/main_screen_menu.xml" value="0.22" />
       </map>
     </option>
   </component>
