@@ -26,7 +26,7 @@ class MyApp : Application() {
                         HistoryDataBase::class.java,
                         DB_NAME
                     )
-                        .allowMainThreadQueries()
+                        //.allowMainThreadQueries()
                         .build()
                 } else {
                     throw IllformedLocaleException("appInstance==null")

@@ -13,7 +13,7 @@ class HistoryViewModel(
 
     fun getAllHistory() {
         historyLiveDataObserve.value = AppState.Loading
-        Thread {
+        Thread { //FIXME ПОТОК
             historyLiveDataObserve.postValue(AppState.SuccessMain(historyRepositoryImpl.getAllHistory()))
         }.start()
     }
