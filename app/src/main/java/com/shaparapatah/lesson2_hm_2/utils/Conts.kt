@@ -10,3 +10,4 @@ const val YANDEX_API_KEY_NAME = "X-Yandex-API-Key"
 const val YANDEX_API_URL = "https://api.weather.yandex.ru/"
 const val YANDEX_API_URL_END_POINT = "v2/informers"
 const val REQUEST_ERROR = "Ошибка запроса на сервер"
+const val REQUEST_CODE = 42

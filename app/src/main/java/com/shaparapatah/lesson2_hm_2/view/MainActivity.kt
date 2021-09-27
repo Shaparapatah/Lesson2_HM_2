@@ -10,6 +10,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.shaparapatah.lesson2_hm_2.Contacts.ContentProviderFragment
 import com.shaparapatah.lesson2_hm_2.R
 import com.shaparapatah.lesson2_hm_2.view.history.HistoryFragment
 import com.shaparapatah.lesson2_hm_2.view.main.MainFragment
@@ -50,6 +51,12 @@ class MainActivity : AppCompatActivity() {
             R.id.action_open_fragment_history -> {
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, HistoryFragment.newInstance())
+                    .addToBackStack("").commit()
+                true
+            }
+            R.id.action_open_fragment_content_provider -> {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, ContentProviderFragment.newInstance())
                     .addToBackStack("").commit()
                 true
             }
