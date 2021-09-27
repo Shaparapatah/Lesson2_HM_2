@@ -9,5 +9,5 @@
     <item
         android:id="@+id/action_open_fragment_history"
         android:title="History"
-        app:showAsAction="always" />
+        app:showAsAction="never" />
 </menu>
