@@ -2,11 +2,15 @@ package com.shaparapatah.lesson2_hm_2.Contacts
 
 import android.Manifest
 import android.app.AlertDialog
+import android.content.ContentResolver
 import android.content.pm.PackageManager
+import android.database.Cursor
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.shaparapatah.lesson2_hm_2.databinding.FragmentContentProviderBinding
@@ -72,6 +76,29 @@ class ContentProviderFragment : Fragment() {
     }
 
     private fun getContacts() {
+        context?.let {
+            val contentResolver: ContentResolver = it.contentResolver
+            val cursor: Cursor? = contentResolver.query(
+                ContactsContract.Contacts.CONTENT_URI,
+                null,
+                null,
+                null,
+                ContactsContract.Contacts.DISPLAY_NAME + " ASC" //
+            )
+
+            cursor?.let { cursor ->
+                for (i in 0 until cursor.count) {
+                    if (cursor.moveToPosition(i)) {
+                        val name =
+                            cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME))
+                        binding.containerForContacts.addView(TextView(it).apply {
+                            text = name
+                            textSize = 30f
+                        })
+                    }
+                }
+            }
+        }
 
     }
 
