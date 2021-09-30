@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import by.kirich1409.viewbindingdelegate.CreateMethod
+import by.kirich1409.viewbindingdelegate.viewBinding
 import coil.ImageLoader
 import coil.decode.SvgDecoder
 import coil.load
@@ -21,14 +23,18 @@ import kotlinx.android.synthetic.main.fragment_details.*
 
 class DetailsFragment : Fragment() {
 
+    private val binding: FragmentDetailsBinding by viewBinding(CreateMethod.INFLATE)
+
 
     private val viewModel: DetailsViewModel by lazy {
         ViewModelProvider(this).get(DetailsViewModel::class.java)
     }
 
-    private var _binding: FragmentDetailsBinding? = null
+   /* private var _binding: FragmentDetailsBinding? = null
     private val binding get() = _binding!!
 
+
+    */
 
     companion object {
         const val BUNDLE_WEATHER_KAY = "KEY"
@@ -45,7 +51,7 @@ class DetailsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentDetailsBinding.inflate(inflater, container, false)
+       // _binding = FragmentDetailsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -130,10 +136,12 @@ class DetailsFragment : Fragment() {
     }
 
 
-    override fun onDestroy() {
+ /*   override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }
+
+  */
 
     private fun getWeatherFromRemote() {
         viewModel.getWeatherFromRemoteSource(localWeather.city.lat, localWeather.city.lon)

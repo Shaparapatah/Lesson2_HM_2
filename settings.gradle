@@ -8,3 +8,5 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Lesson2_HM_2"
 include ':app'
+include ':app:myapplication'
+include ':app:myapplication2'

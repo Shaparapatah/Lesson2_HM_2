@@ -13,14 +13,20 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import by.kirich1409.viewbindingdelegate.CreateMethod
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.shaparapatah.lesson2_hm_2.databinding.FragmentContentProviderBinding
 import com.shaparapatah.lesson2_hm_2.utils.REQUEST_CODE
 
 class ContentProviderFragment : Fragment() {
 
-    private var _binding: FragmentContentProviderBinding? = null
+    private val binding : FragmentContentProviderBinding by viewBinding(CreateMethod.INFLATE)
+
+   /* private var _binding: FragmentContentProviderBinding? = null
     private val binding get() = _binding!!
 
+
+    */
 
     companion object {
         fun newInstance() = ContentProviderFragment()
@@ -32,7 +38,7 @@ class ContentProviderFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentContentProviderBinding.inflate(inflater, container, false)
+       // _binding = FragmentContentProviderBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -42,10 +48,12 @@ class ContentProviderFragment : Fragment() {
     }
 
 
-    override fun onDestroy() {
+   /* override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }
+
+    */
 
     private fun checkPermission() {
         context?.let {
