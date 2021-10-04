@@ -1,14 +1,22 @@
 package com.shaparapatah.lesson2_hm_2.view.main
 
+import android.Manifest
+import android.app.AlertDialog
+import android.content.Context
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import by.kirich1409.viewbindingdelegate.CreateMethod
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import com.shaparapatah.lesson2_hm_2.R
+import com.shaparapatah.lesson2_hm_2.databinding.FragmentContentProviderBinding
 import com.shaparapatah.lesson2_hm_2.databinding.FragmentMainBinding
 import com.shaparapatah.lesson2_hm_2.domain.Weather
 import com.shaparapatah.lesson2_hm_2.view.OnItemViewClickListener
@@ -18,8 +26,8 @@ import com.shaparapatah.lesson2_hm_2.viewModel.MainViewModel
 
 class MainFragment : Fragment() {
 
-    private var _binding: FragmentMainBinding? = null
-    private val binding get() = _binding!!
+    private val binding: FragmentMainBinding by viewBinding(CreateMethod.INFLATE)
+
 
     private val viewModel: MainViewModel by lazy {
         ViewModelProvider(this)
@@ -49,13 +57,52 @@ class MainFragment : Fragment() {
         fun newInstance() = MainFragment()
     }
 
+    private fun checkPermission() {
+        context?.let {
+            when {
+                ContextCompat.checkSelfPermission(it, Manifest.permission.READ_CONTACTS) ==
+                        PackageManager.PERMISSION_GRANTED -> {
+                    getLocation()
+                }
+
+                shouldShowRequestPermissionRationale(Manifest.permission.READ_CONTACTS) -> {
+                    getRatio()
+                }
+                else -> {
+                    getLocation()
+                }
+            }
+        }
+    }
+
+    private fun getRatio() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Доступ к контактам")
+            .setMessage("Чтобы продолжить работу с приложением, требуется доступ к контактам")
+            .setPositiveButton("Предоставить доступ") { _, _ ->
+                myRequestPermission()
+            }
+            .setNegativeButton("Не предоставлять доступ") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+            .show()
+    }
+
+    private fun myRequestPermission() {
+        TODO("Not yet implemented")
+    }
+
+    private fun getLocation() {
+
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -112,13 +159,6 @@ class MainFragment : Fragment() {
 
     private fun View.showSnackbarWithoutAction(view: View, stringId: Int, snackbarLength: Int) {
         Snackbar.make(view, getString(stringId), snackbarLength).show()
-    }
-
-
-    override fun onDestroy() {
-        adapter.removeListener()
-        super.onDestroy()
-        _binding = null
     }
 }
 
