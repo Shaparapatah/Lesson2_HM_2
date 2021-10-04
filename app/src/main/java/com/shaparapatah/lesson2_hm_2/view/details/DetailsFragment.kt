@@ -130,7 +130,6 @@ class DetailsFragment : Fragment() {
                    .into(imageViewHeader)
              */
 
-            imageViewHeader.load("https://freepngimg.com/thumb/city/36275-3-city-hd.png")
             imageView.loadUrl(("https://yastatic.net/weather/i/icons/blueye/color/svg/${weather.icon}.svg"))
         }
     }
