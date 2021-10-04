@@ -4,6 +4,10 @@ import android.Manifest
 import android.app.AlertDialog
 import android.content.Context
 import android.content.pm.PackageManager
+import android.location.Geocoder
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,8 +20,8 @@ import by.kirich1409.viewbindingdelegate.CreateMethod
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import com.shaparapatah.lesson2_hm_2.R
-import com.shaparapatah.lesson2_hm_2.databinding.FragmentContentProviderBinding
 import com.shaparapatah.lesson2_hm_2.databinding.FragmentMainBinding
+import com.shaparapatah.lesson2_hm_2.domain.City
 import com.shaparapatah.lesson2_hm_2.domain.Weather
 import com.shaparapatah.lesson2_hm_2.utils.REQUEST_CODE
 import com.shaparapatah.lesson2_hm_2.view.OnItemViewClickListener
@@ -25,9 +29,13 @@ import com.shaparapatah.lesson2_hm_2.view.details.DetailsFragment
 import com.shaparapatah.lesson2_hm_2.viewModel.AppState
 import com.shaparapatah.lesson2_hm_2.viewModel.MainViewModel
 
-class MainFragment : Fragment() {
+class MainFragment : Fragment(), OnItemViewClickListener {
 
     private val binding: FragmentMainBinding by viewBinding(CreateMethod.INFLATE)
+
+
+    private val REFRESH_PERIOD = 10000L
+    private val MINIMAL_DISTANCE = 100f
 
 
     private val viewModel: MainViewModel by lazy {
@@ -67,16 +75,16 @@ class MainFragment : Fragment() {
                 }
 
                 shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION) -> {
-                    getRatio()
+                    showRatio()
                 }
                 else -> {
-                    getLocation()
+                    myRequestPermission()
                 }
             }
         }
     }
 
-    private fun getRatio() {
+    private fun showRatio() {
         AlertDialog.Builder(requireContext())
             .setTitle(R.string.dialog_rationale_title)
             .setMessage(R.string.dialog_rationale_message)
@@ -91,11 +99,90 @@ class MainFragment : Fragment() {
     }
 
     private fun myRequestPermission() {
-        requestPermissions(arrayOf(Manifest.permission.READ_CONTACTS), REQUEST_CODE)
+        requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_CODE)
+    }
+
+    private val onLocationChargeListener =
+        LocationListener { location -> getAddressAsync(requireContext(), location) }
+
+    private fun getAddressAsync(context: Context?, location: Location) {
+        val geocoder = Geocoder(context)
+        val address = geocoder.getFromLocation(location.latitude, location.longitude, 1)
+        showAddressDialog(address[0].getAddressLine(0), location)
+    }
+
+
+    private fun showAddressDialog(address: String, location: Location) {
+        activity?.let {
+            androidx.appcompat.app.AlertDialog.Builder(it)
+                .setTitle(getString(R.string.dialog_address_title))
+                .setMessage(address)
+                .setPositiveButton(getString(R.string.dialog_address_get_weather)) { _, _ ->
+                    onItemClick(
+                        Weather(
+                            City(
+                                address,
+                                location.latitude,
+                                location.longitude
+                            )
+                        )
+                    )
+                }
+                .setNegativeButton(getString(R.string.dialog_button_close)) { dialog, _ -> dialog.dismiss() }
+                .create()
+                .show()
+        }
     }
 
     private fun getLocation() {
+        activity?.let {
+            if (ContextCompat.checkSelfPermission(it, Manifest.permission.ACCESS_FINE_LOCATION) ==
+                PackageManager.PERMISSION_GRANTED
+            ) {
+                val locationManager =
+                    it.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+                if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    val provider = locationManager.getProvider(LocationManager.GPS_PROVIDER)
+                    provider?.let {
+                        locationManager.requestLocationUpdates(
+                            LocationManager.GPS_PROVIDER,
+                            REFRESH_PERIOD,
+                            MINIMAL_DISTANCE,
+                            onLocationChargeListener
+                        )
+                    }
 
+                } else {
+                    val location =
+                        locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+                    location?.let {
+                        // TODO
+                    }
+                }
+            } else {
+                showRatio()
+            }
+
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        when (requestCode) {
+            REQUEST_CODE -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    getLocation()
+                } else {
+                    context?.let {
+                        showRatio()
+                    }
+                }
+                return
+            }
+        }
     }
 
 
@@ -111,11 +198,15 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
             mainFragmentRecyclerView.adapter = adapter
+            mainFragmentFABLocation.setOnClickListener {
+                checkPermission()
+            }
             mainFragmentFAB.setOnClickListener { changeWeatherDataSet() }
             viewModel.getLiveData()
                 .observe(viewLifecycleOwner, Observer<AppState> {
                     renderData(it)
                 })
+
             viewModel.getWeatherFromLocalSourceRussian()
         }
 
@@ -160,6 +251,15 @@ class MainFragment : Fragment() {
 
     private fun View.showSnackbarWithoutAction(view: View, stringId: Int, snackbarLength: Int) {
         Snackbar.make(view, getString(stringId), snackbarLength).show()
+    }
+
+    override fun onItemClick(weather: Weather) {
+        val bundle = Bundle()
+        bundle.putParcelable(DetailsFragment.BUNDLE_WEATHER_KAY, weather)
+        requireActivity().supportFragmentManager.beginTransaction()
+            .add(R.id.fragment_container, DetailsFragment.newInstance(bundle))
+            .addToBackStack("")
+            .commit()
     }
 }
 

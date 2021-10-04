@@ -11,7 +11,6 @@ import by.kirich1409.viewbindingdelegate.CreateMethod
 import by.kirich1409.viewbindingdelegate.viewBinding
 import coil.ImageLoader
 import coil.decode.SvgDecoder
-import coil.load
 import coil.request.ImageRequest
 import com.google.android.material.snackbar.Snackbar
 import com.shaparapatah.lesson2_hm_2.databinding.FragmentDetailsBinding
@@ -30,20 +29,17 @@ class DetailsFragment : Fragment() {
         ViewModelProvider(this).get(DetailsViewModel::class.java)
     }
 
-   /* private var _binding: FragmentDetailsBinding? = null
-    private val binding get() = _binding!!
-
-
-    */
 
     companion object {
-        const val BUNDLE_WEATHER_KAY = "KEY"
+
 
         fun newInstance(bundle: Bundle): DetailsFragment {
             val fragment = DetailsFragment()
             fragment.arguments = bundle
             return fragment
         }
+
+        const val BUNDLE_WEATHER_KAY = "KEY"
     }
 
     override fun onCreateView(
@@ -51,7 +47,6 @@ class DetailsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-       // _binding = FragmentDetailsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -116,31 +111,10 @@ class DetailsFragment : Fragment() {
             feelsLikeValue.text = weather.feelsLike.toString()
             conditionStatus(weather)
 
-            /*   imageView
-               Picasso
-                   .get()
-                   //  .load("https://yastatic.net/weather/i/icons/blueye/color/svg/${weather.icon}.svg")
-                   .load("https://freepngimg.com/thumb/city/36275-3-city-hd.png")
-                   .into(imageViewHeader)
-
-             */
-
-            /*   Glide.with(imageViewHeader)
-                   .load("https://freepngimg.com/thumb/city/36275-3-city-hd.png")
-                   .into(imageViewHeader)
-             */
-
             imageView.loadUrl(("https://yastatic.net/weather/i/icons/blueye/color/svg/${weather.icon}.svg"))
         }
     }
 
-
- /*   override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
-    }
-
-  */
 
     private fun getWeatherFromRemote() {
         viewModel.getWeatherFromRemoteSource(localWeather.city.lat, localWeather.city.lon)

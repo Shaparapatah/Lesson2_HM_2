@@ -121,22 +121,24 @@ class ContentProviderFragment : Fragment() {
 
 
     private fun myRequestPermission() {
-       val launcher = registerForActivityResult(ActivityResultContracts.RequestPermission(), ActivityResultCallback {
-            result ->  if (result) {
-            getContactByNumber()
-        } else {
-           context?.let {
-               AlertDialog.Builder(it)
-                   .setTitle("Доступ к контактам")
-                   .setMessage("Вы не предоставили доступ к контактам, дальнейшая работа с приложением прекращенна")
-                   .setNegativeButton("Закрыть") { dialog, _ ->
-                       dialog.dismiss()
-                   }
-                   .create()
-                   .show()
-           }
-        }
-        })
+        val launcher = registerForActivityResult(
+            ActivityResultContracts.RequestPermission(),
+            ActivityResultCallback { result ->
+                if (result) {
+                    getContactByNumber()
+                } else {
+                    context?.let {
+                        AlertDialog.Builder(it)
+                            .setTitle("Доступ к контактам")
+                            .setMessage("Вы не предоставили доступ к контактам, дальнейшая работа с приложением прекращенна")
+                            .setNegativeButton("Закрыть") { dialog, _ ->
+                                dialog.dismiss()
+                            }
+                            .create()
+                            .show()
+                    }
+                }
+            })
         launcher.launch(Manifest.permission.READ_CONTACTS)
     }
 
