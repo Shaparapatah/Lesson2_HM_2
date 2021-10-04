@@ -19,6 +19,7 @@ import com.shaparapatah.lesson2_hm_2.R
 import com.shaparapatah.lesson2_hm_2.databinding.FragmentContentProviderBinding
 import com.shaparapatah.lesson2_hm_2.databinding.FragmentMainBinding
 import com.shaparapatah.lesson2_hm_2.domain.Weather
+import com.shaparapatah.lesson2_hm_2.utils.REQUEST_CODE
 import com.shaparapatah.lesson2_hm_2.view.OnItemViewClickListener
 import com.shaparapatah.lesson2_hm_2.view.details.DetailsFragment
 import com.shaparapatah.lesson2_hm_2.viewModel.AppState
@@ -60,12 +61,12 @@ class MainFragment : Fragment() {
     private fun checkPermission() {
         context?.let {
             when {
-                ContextCompat.checkSelfPermission(it, Manifest.permission.READ_CONTACTS) ==
+                ContextCompat.checkSelfPermission(it, Manifest.permission.ACCESS_FINE_LOCATION) ==
                         PackageManager.PERMISSION_GRANTED -> {
                     getLocation()
                 }
 
-                shouldShowRequestPermissionRationale(Manifest.permission.READ_CONTACTS) -> {
+                shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION) -> {
                     getRatio()
                 }
                 else -> {
@@ -77,12 +78,12 @@ class MainFragment : Fragment() {
 
     private fun getRatio() {
         AlertDialog.Builder(requireContext())
-            .setTitle("Доступ к контактам")
-            .setMessage("Чтобы продолжить работу с приложением, требуется доступ к контактам")
-            .setPositiveButton("Предоставить доступ") { _, _ ->
+            .setTitle(R.string.dialog_rationale_title)
+            .setMessage(R.string.dialog_rationale_message)
+            .setPositiveButton(R.string.dialog_rationale_give_access) { _, _ ->
                 myRequestPermission()
             }
-            .setNegativeButton("Не предоставлять доступ") { dialog, _ ->
+            .setNegativeButton(R.string.dialog_rationale_decline) { dialog, _ ->
                 dialog.dismiss()
             }
             .create()
@@ -90,7 +91,7 @@ class MainFragment : Fragment() {
     }
 
     private fun myRequestPermission() {
-        TODO("Not yet implemented")
+        requestPermissions(arrayOf(Manifest.permission.READ_CONTACTS), REQUEST_CODE)
     }
 
     private fun getLocation() {

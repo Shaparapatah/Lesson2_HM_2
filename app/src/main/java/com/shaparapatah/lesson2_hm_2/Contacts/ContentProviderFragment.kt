@@ -12,6 +12,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.ActivityResultCallback
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import by.kirich1409.viewbindingdelegate.CreateMethod
@@ -119,7 +121,23 @@ class ContentProviderFragment : Fragment() {
 
 
     private fun myRequestPermission() {
-        requestPermissions(arrayOf(Manifest.permission.READ_CONTACTS), REQUEST_CODE)
+       val launcher = registerForActivityResult(ActivityResultContracts.RequestPermission(), ActivityResultCallback {
+            result ->  if (result) {
+            getContactByNumber()
+        } else {
+           context?.let {
+               AlertDialog.Builder(it)
+                   .setTitle("Доступ к контактам")
+                   .setMessage("Вы не предоставили доступ к контактам, дальнейшая работа с приложением прекращенна")
+                   .setNegativeButton("Закрыть") { dialog, _ ->
+                       dialog.dismiss()
+                   }
+                   .create()
+                   .show()
+           }
+        }
+        })
+        launcher.launch(Manifest.permission.READ_CONTACTS)
     }
 
     override fun onRequestPermissionsResult(
