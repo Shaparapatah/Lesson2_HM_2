@@ -14,7 +14,6 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.shaparapatah.lesson2_hm_2.R
 import com.shaparapatah.lesson2_hm_2.databinding.FragmentGoogleMapsMainBinding
-import com.shaparapatah.lesson2_hm_2.databinding.FragmentMapsBinding
 
 class MapsFragment : Fragment() {
 
