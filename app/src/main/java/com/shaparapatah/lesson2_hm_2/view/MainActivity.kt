@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.shaparapatah.lesson2_hm_2.Contacts.ContentProviderFragment
 import com.shaparapatah.lesson2_hm_2.R
+import com.shaparapatah.lesson2_hm_2.maps.MapsFragment
 import com.shaparapatah.lesson2_hm_2.view.history.HistoryFragment
 import com.shaparapatah.lesson2_hm_2.view.main.MainFragment
 
@@ -58,6 +59,12 @@ class MainActivity : AppCompatActivity() {
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, ContentProviderFragment.newInstance())
                     .addToBackStack("").commit()
+                true
+            }
+            R.id.action_open_fragment_menu_google_maps -> {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, MapsFragment.newInstance()).addToBackStack("")
+                    .commit()
                 true
             }
             else -> super.onOptionsItemSelected(item)

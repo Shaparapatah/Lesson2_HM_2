@@ -14,5 +14,11 @@
     <item
         android:id="@+id/action_open_fragment_content_provider"
         android:title="Provider"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_open_fragment_menu_google_maps"
+        android:icon="@android:drawable/ic_dialog_map"
+        android:title="maps"
         app:showAsAction="always" />
 </menu>
