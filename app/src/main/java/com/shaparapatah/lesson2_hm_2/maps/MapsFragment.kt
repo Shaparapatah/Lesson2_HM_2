@@ -2,6 +2,8 @@ package com.shaparapatah.lesson2_hm_2.maps
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.location.Geocoder
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,8 +17,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
 import com.shaparapatah.lesson2_hm_2.R
 import com.shaparapatah.lesson2_hm_2.databinding.FragmentGoogleMapsMainBinding
 
@@ -28,8 +29,9 @@ class MapsFragment : Fragment() {
         fun newInstance() = MapsFragment()
     }
 
-
     lateinit var map: GoogleMap
+
+    private val markers: ArrayList<Marker> = arrayListOf()
     private val callback = OnMapReadyCallback { googleMap ->
         map = googleMap
 
@@ -47,6 +49,38 @@ class MapsFragment : Fragment() {
         map.setMyLocationEnabled(isPermissionGranted)
         map.uiSettings.isMyLocationButtonEnabled = true
 
+
+        map.setOnMapLongClickListener { location ->
+            moveToPosition(location)
+            addMarker(location)
+            drawLine()
+        }
+
+    }
+
+    private fun addMarker(location: LatLng) {
+        markers.add(
+            map.addMarker(
+                MarkerOptions()
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_map_pin))
+                    .position(location)
+                    .title("")
+            )
+        )
+    }
+
+    private fun drawLine() {
+        val last = markers.size - 1
+        if (last > 0) {
+            val startMarker = markers[last - 1].position
+            val endMarker = markers[last].position
+            map.addPolyline(
+                PolylineOptions()
+                    .add(startMarker, endMarker)
+                    .color(Color.RED)
+                    .width(5f)
+            )
+        }
     }
 
 
@@ -67,8 +101,12 @@ class MapsFragment : Fragment() {
             val addressRow = binding.searchAddress.text.toString()
             val address = geocoder.getFromLocationName(addressRow, 1)
             val location = LatLng(address[0].latitude, address[0].longitude)
-            map.addMarker(MarkerOptions().position(location).title("Marker start"))
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 12f))
+            moveToPosition(location)
         }
+    }
+
+    private fun moveToPosition(location: LatLng) {
+        //  map.addMarker(MarkerOptions().position(location).title("Marker start"))
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 12f))
     }
 }
