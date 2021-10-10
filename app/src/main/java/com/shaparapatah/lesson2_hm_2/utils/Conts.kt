@@ -12,4 +12,5 @@ const val YANDEX_API_URL_END_POINT = "v2/informers"
 const val REQUEST_ERROR = "Ошибка запроса на сервер"
 const val REQUEST_CODE = 42
 
+//server KEY : AAAAKkJkmdo:APA91bFknMhgBOZsmJHyNe2qcG9oTDHBcRB3JK6S_4YP478Qj7X8oilFYkoMDDSSiZR-ieXTTXxNrDV8NFgyOr3Y2G0bHFQfdUoF4oRsrypPdytT_qgkbTkqM5aMkosjzKWwonBtDGWw
 
