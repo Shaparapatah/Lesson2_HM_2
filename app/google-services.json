@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "181502515674",
+    "project_id": "lesson-11-b5ec2",
+    "storage_bucket": "lesson-11-b5ec2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:181502515674:android:2146c47719202c87f4c8e3",
+        "android_client_info": {
+          "package_name": "com.shaparapatah.lesson2_hm_2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "181502515674-k1b70vvij3j3rek7gp25gpiro8jlhpd6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-ie6XyIKECuX2tL_RB27sMPi7xlTb-pA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "181502515674-k1b70vvij3j3rek7gp25gpiro8jlhpd6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
