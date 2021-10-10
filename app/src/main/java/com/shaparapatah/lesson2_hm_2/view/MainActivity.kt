@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val filter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
         registerReceiver(networkChangeReceiver, filter)
-        notificationsChannels()
+        initNotificationsChannels()
 
 
         if (savedInstanceState == null)
@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun notificationsChannels() { /ff
+    private fun initNotificationsChannels() {
 
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -52,13 +52,13 @@ class MainActivity : AppCompatActivity() {
             setSmallIcon(R.drawable.ic_earth)
             setContentTitle("Заголовок для $CHANNEL_ID_1")
             setContentText("Сообщение для $CHANNEL_ID_1")
-            priority = NotificationCompat.PRIORITY_MAX
+            priority = NotificationCompat.PRIORITY_DEFAULT
         }
         val notificationBuilderTwo = NotificationCompat.Builder(this, CHANNEL_ID_2).apply {
             setSmallIcon(R.drawable.ic_russia)
             setContentTitle("Заголовок для $CHANNEL_ID_2")
             setContentText("Сообщение для $CHANNEL_ID_2")
-            priority = NotificationCompat.PRIORITY_MAX
+            priority = NotificationCompat.PRIORITY_DEFAULT
         }
 
 
@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val nameChannelTwo = "Name $CHANNEL_ID_2"
             val descChannelTwo = "Description $CHANNEL_ID_2"
-            val importanceChannelTwo = NotificationManager.IMPORTANCE_HIGH
+            val importanceChannelTwo = NotificationManager.IMPORTANCE_MIN
             val channelTwo =
                 NotificationChannel(CHANNEL_ID_2, nameChannelTwo, importanceChannelTwo).apply {
                     description = descChannelTwo
