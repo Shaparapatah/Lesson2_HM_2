@@ -1,10 +1,13 @@
 package com.shaparapatah.lesson2_hm_2.maps
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import by.kirich1409.viewbindingdelegate.CreateMethod
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -34,6 +37,16 @@ class MapsFragment : Fragment() {
         map.addMarker(MarkerOptions().position(startPlace).title("Marker start"))
         map.moveCamera(CameraUpdateFactory.newLatLng(startPlace))
         map.uiSettings.isZoomControlsEnabled = true
+
+
+        val isPermissionGranted = ContextCompat.checkSelfPermission(
+            requireContext(),
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
+
+        map.setMyLocationEnabled(isPermissionGranted)
+        map.uiSettings.isMyLocationButtonEnabled = true
+
     }
 
 
