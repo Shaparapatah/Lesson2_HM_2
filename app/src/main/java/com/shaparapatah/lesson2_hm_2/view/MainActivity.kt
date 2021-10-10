@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun notificationsChannels() { //ff
+    private fun notificationsChannels() { //fff
 
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
