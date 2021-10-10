@@ -9,11 +9,13 @@ import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
+import com.google.firebase.messaging.FirebaseMessaging
 import com.shaparapatah.lesson2_hm_2.Contacts.ContentProviderFragment
 import com.shaparapatah.lesson2_hm_2.R
 import com.shaparapatah.lesson2_hm_2.maps.MapsFragment
@@ -35,12 +37,16 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val filter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
         registerReceiver(networkChangeReceiver, filter)
-        initNotificationsChannels()
-
-
         if (savedInstanceState == null)
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, MainFragment.newInstance()).commit()
+
+
+        FirebaseMessaging.getInstance().token.addOnCompleteListener {
+            if (it.isSuccessful) {
+                Log.d("mylogs", it.result.toString())
+            }
+        }
 
     }
 
