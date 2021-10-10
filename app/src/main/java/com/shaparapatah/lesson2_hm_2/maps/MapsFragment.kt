@@ -1,5 +1,6 @@
 package com.shaparapatah.lesson2_hm_2.maps
 
+import android.location.Geocoder
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import androidx.fragment.app.Fragment
 import by.kirich1409.viewbindingdelegate.CreateMethod
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
@@ -23,10 +25,15 @@ class MapsFragment : Fragment() {
         fun newInstance() = MapsFragment()
     }
 
+
+    lateinit var map: GoogleMap
     private val callback = OnMapReadyCallback { googleMap ->
-        val moscow = LatLng(55.0, 37.0)
-        googleMap.addMarker(MarkerOptions().position(moscow).title("Marker in Moscow"))
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(moscow))
+        map = googleMap
+
+        val startPlace = LatLng(55.0, 37.0)
+        map.addMarker(MarkerOptions().position(startPlace).title("Marker start"))
+        map.moveCamera(CameraUpdateFactory.newLatLng(startPlace))
+        map.uiSettings.isZoomControlsEnabled = true
     }
 
 
@@ -42,5 +49,13 @@ class MapsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
+        binding.buttonSearch.setOnClickListener {
+            val geocoder = Geocoder(requireContext())
+            val addressRow = binding.searchAddress.text.toString()
+            val address = geocoder.getFromLocationName(addressRow, 1)
+            val location = LatLng(address[0].latitude, address[0].longitude)
+            map.addMarker(MarkerOptions().position(location).title("Marker start"))
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 12f))
+        }
     }
 }
