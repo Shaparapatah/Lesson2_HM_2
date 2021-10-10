@@ -2,7 +2,6 @@ package com.shaparapatah.lesson2_hm_2.maps
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.location.Geocoder
 import android.os.Bundle
@@ -21,6 +20,7 @@ import com.google.android.gms.maps.model.*
 import com.shaparapatah.lesson2_hm_2.R
 import com.shaparapatah.lesson2_hm_2.databinding.FragmentGoogleMapsMainBinding
 
+
 class MapsFragment : Fragment() {
 
     private val binding: FragmentGoogleMapsMainBinding by viewBinding(CreateMethod.INFLATE)
@@ -29,8 +29,7 @@ class MapsFragment : Fragment() {
         fun newInstance() = MapsFragment()
     }
 
-    lateinit var map: GoogleMap
-
+    private lateinit var map: GoogleMap
     private val markers: ArrayList<Marker> = arrayListOf()
     private val callback = OnMapReadyCallback { googleMap ->
         map = googleMap
@@ -40,7 +39,6 @@ class MapsFragment : Fragment() {
         map.moveCamera(CameraUpdateFactory.newLatLng(startPlace))
         map.uiSettings.isZoomControlsEnabled = true
 
-
         val isPermissionGranted = ContextCompat.checkSelfPermission(
             requireContext(),
             Manifest.permission.ACCESS_FINE_LOCATION
@@ -49,12 +47,12 @@ class MapsFragment : Fragment() {
         map.setMyLocationEnabled(isPermissionGranted)
         map.uiSettings.isMyLocationButtonEnabled = true
 
-
         map.setOnMapLongClickListener { location ->
             moveToPosition(location)
             addMarker(location)
             drawLine()
         }
+
 
     }
 
@@ -64,7 +62,8 @@ class MapsFragment : Fragment() {
                 MarkerOptions()
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_map_pin))
                     .position(location)
-                    .title("")
+                    .draggable(true)
+                    .title("Position")
             )
         )
     }
@@ -82,7 +81,6 @@ class MapsFragment : Fragment() {
             )
         }
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
